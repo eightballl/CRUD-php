@@ -9,80 +9,87 @@
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 30px;
-      background: #f5f7fa;
+      background: linear-gradient(180deg, #f9fbff 0%, #eef3f9 100%);
     }
 
     h2 {
-      color: #333;
-      margin-bottom: 20px;
+      color: #222;
+      margin-bottom: 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
-    /* Kotak upload default */
+    /* Kotak upload */
     .upload-area {
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       width: 280px;
       height: 200px;
       border: 3px dashed #007bff;
       border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin: 0 auto;
     }
 
     .upload-area:hover {
       background: #eaf3ff;
       border-color: #0056d2;
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
-    .upload-area::before {
-      content: "📷";
-      font-size: 48px;
+    .upload-area .icon {
+      font-size: 50px;
       color: #007bff;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -70%);
+      margin-bottom: 12px;
+      animation: pulse 1.6s infinite ease-in-out;
     }
 
-    .upload-area::after {
-      content: "Ambil / Pilih Barcode";
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
+    .upload-area .text {
       font-size: 1.1em;
       color: #007bff;
       font-weight: 600;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
 
     #barcodeInput {
       display: none;
     }
 
-    /* Preview container */
+    /* Preview */
     .preview-wrapper {
       position: relative;
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 15px;
       width: 100%;
       max-width: 480px;
     }
 
-    /* Gambar preview */
     #preview {
       display: none;
       width: 100%;
-      border-radius: 12px;
+      border-radius: 16px;
       border: 3px solid #007bff;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0, 123, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* Overlay hover di atas preview */
+    #preview:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 123, 255, 0.35);
+    }
+
+    /* Overlay hover “Ambil Ulang” */
     .preview-wrapper:hover::after {
       content: "🔁 Ambil Ulang";
       position: absolute;
@@ -97,7 +104,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
+      border-radius: 16px;
       pointer-events: none;
       opacity: 1;
       transition: opacity 0.3s ease;
@@ -108,7 +115,7 @@
     }
 
     #status {
-      margin-top: 15px;
+      margin-top: 20px;
       color: #555;
       font-size: 0.95em;
     }
@@ -120,7 +127,6 @@
       color: #222;
     }
 
-    /* Spinner loading */
     .spinner {
       display: none;
       margin: 20px auto;
@@ -141,7 +147,10 @@
   <h2>📷 Scan Barcode Produk</h2>
 
   <!-- Area Upload -->
-  <label for="barcodeInput" class="upload-area" id="uploadArea"></label>
+  <label for="barcodeInput" class="upload-area" id="uploadArea">
+    <div class="icon">📷</div>
+    <div class="text">Ambil / Pilih Barcode</div>
+  </label>
   <input type="file" id="barcodeInput" accept="image/*" capture="environment">
 
   <!-- Preview Gambar -->
@@ -154,7 +163,7 @@
   <div id="status">Klik kotak di atas untuk ambil atau pilih foto barcode.</div>
   <div id="result"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+  <script src="/quagga.min.js"></script>
   <script>
     const barcodeInput = document.getElementById('barcodeInput');
     const preview = document.getElementById('preview');
